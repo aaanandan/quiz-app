@@ -15,6 +15,8 @@ import he from 'he';
 
 import Countdown from '../Countdown';
 import { getLetter } from '../../utils';
+import img from '../../images/kailaasa-flag-triangular-2019-compressed.png'
+
 
 const Quiz = ({ data, countdownTime, endQuiz }) => {
 
@@ -30,8 +32,9 @@ const Quiz = ({ data, countdownTime, endQuiz }) => {
 
   const handleNext = () => {
     let point = 0;
+    //TODO:API call to validate answer 
     if (userSlectedAns === he.decode(data[questionIndex].correct_answer)) {
-      point = 1;
+      point = 1; //TODO: get Points from api resposne
     }
 
     const qna = questionsAndAnswers;
@@ -69,6 +72,19 @@ const Quiz = ({ data, countdownTime, endQuiz }) => {
   return (
     <Item.Header>
       <Container>
+        <Segment>
+          <Item.Group divided>
+            <Item>
+              <Item.Image src={img} />
+              {/* <Header as="h1" block floated="left">
+                <Header.Content>
+                  {`Kailasa eligiblity test`}
+                </Header.Content>
+              </Header> */}
+            </Item>
+
+          </Item.Group>
+        </Segment>
         <Segment>
           <Item.Group divided>
             <Item>

@@ -4,27 +4,23 @@ import {
   Container,
   Segment,
   Item,
-  Dropdown,
   Divider,
   Button,
   Message,
+  Menu
 } from 'semantic-ui-react';
 
-import mindImg from '../../images/mind.svg';
+import img from '../../images/kailaasa-flag-triangular-2019-compressed.png'
 
 import {
-  CATEGORIES,
-  NUM_OF_QUESTIONS,
-  DIFFICULTY,
-  QUESTIONS_TYPE,
-  COUNTDOWN_TIME,
+  MAJORS,
 } from '../../constants';
 import { shuffle } from '../../utils';
 
 import Offline from '../Offline';
 
 const Main = ({ startQuiz }) => {
-  const [category, setCategory] = useState('0');
+  const [category, setCategory] = useState(0);
   const [numOfQuestions, setNumOfQuestions] = useState(5);
   const [difficulty, setDifficulty] = useState('0');
   const [questionsType, setQuestionsType] = useState('0');
@@ -56,6 +52,17 @@ const Main = ({ startQuiz }) => {
     setProcessing(true);
 
     if (error) setError(null);
+
+    //TODO: change API end point to secure API validating token and generate questioner 
+    // 1. Hindu  Philosophy
+    // 2. Hindu History 
+    // 3. Hindu identity 
+    // 4. Know your nation
+
+    // 25 mcq objectives (1 mark)/
+    // 10 application (2 marks each) 
+    // 1 social media activity (5 marks)
+
 
     const API = `https://opentdb.com/api.php?amount=${numOfQuestions}&category=${category}&difficulty=${difficulty}&type=${questionsType}`;
 
@@ -94,7 +101,7 @@ const Main = ({ startQuiz }) => {
           setProcessing(false);
           startQuiz(
             results,
-            countdownTime.hours + countdownTime.minutes + countdownTime.seconds
+            countdownTime.hours * 60 * 60 + countdownTime.minutes * 60 + countdownTime.seconds
           );
         }, 1000)
       )
@@ -117,10 +124,11 @@ const Main = ({ startQuiz }) => {
       <Segment>
         <Item.Group divided>
           <Item>
-            <Item.Image src={mindImg} />
+            <Item.Image src={img} />
             <Item.Content>
               <Item.Header>
-                <h1>The Ultimate Trivia Quiz</h1>
+                <br />
+                <h1>KET  - Kailasa eligiblity test</h1>
               </Item.Header>
               {error && (
                 <Message error onDismiss={() => setError(null)}>
@@ -128,90 +136,31 @@ const Main = ({ startQuiz }) => {
                   {error.message}
                 </Message>
               )}
-              <Divider />
+
               <Item.Meta>
-                <Dropdown
-                  fluid
-                  selection
-                  name="category"
-                  placeholder="Select Quiz Category"
-                  header="Select Quiz Category"
-                  options={CATEGORIES}
-                  value={category}
-                  onChange={(e, { value }) => setCategory(value)}
-                  disabled={processing}
-                />
+                <Divider />
                 <br />
-                <Dropdown
-                  fluid
-                  selection
-                  name="numOfQ"
-                  placeholder="Select No. of Questions"
-                  header="Select No. of Questions"
-                  options={NUM_OF_QUESTIONS}
-                  value={numOfQuestions}
-                  onChange={(e, { value }) => setNumOfQuestions(value)}
-                  disabled={processing}
-                />
                 <br />
-                <Dropdown
-                  fluid
-                  selection
-                  name="difficulty"
-                  placeholder="Select Difficulty Level"
-                  header="Select Difficulty Level"
-                  options={DIFFICULTY}
-                  value={difficulty}
-                  onChange={(e, { value }) => setDifficulty(value)}
-                  disabled={processing}
-                />
                 <br />
-                <Dropdown
-                  fluid
-                  selection
-                  name="type"
-                  placeholder="Select Questions Type"
-                  header="Select Questions Type"
-                  options={QUESTIONS_TYPE}
-                  value={questionsType}
-                  onChange={(e, { value }) => setQuestionsType(value)}
-                  disabled={processing}
-                />
-                <br />
-                <Dropdown
-                  search
-                  selection
-                  name="hours"
-                  placeholder="Select Hours"
-                  header="Select Hours"
-                  options={COUNTDOWN_TIME.hours}
-                  value={countdownTime.hours}
-                  onChange={handleTimeChange}
-                  disabled={processing}
-                />
-                <Dropdown
-                  search
-                  selection
-                  name="minutes"
-                  placeholder="Select Minutes"
-                  header="Select Minutes"
-                  options={COUNTDOWN_TIME.minutes}
-                  value={countdownTime.minutes}
-                  onChange={handleTimeChange}
-                  disabled={processing}
-                />
-                <Dropdown
-                  search
-                  selection
-                  name="seconds"
-                  placeholder="Select Seconds"
-                  header="Select Seconds"
-                  options={COUNTDOWN_TIME.seconds}
-                  value={countdownTime.seconds}
-                  onChange={handleTimeChange}
-                  disabled={processing}
-                />
+                <Item.Description>
+                  <h3>Please choose a Major to start, complete all the majors</h3>
+                </Item.Description>
+                <Menu vertical fluid size="massive">
+                  {MAJORS.map((major, i) => {
+                    return (
+                      <Menu.Item
+                        key={i}
+                        name={major.text}
+                        active={category === major.value}
+                        onClick={() => { setCategory(major.value) }}>
+                        <b style={{ marginRight: '8px' }}>{i + 1}. </b>
+                        {major.text}
+                      </Menu.Item>
+                    );
+                  })}
+                </Menu>
               </Item.Meta>
+              <Divider />
               <Divider />
               <Item.Extra>
                 <Button
@@ -219,7 +168,7 @@ const Main = ({ startQuiz }) => {
                   size="big"
                   icon="play"
                   labelPosition="left"
-                  content={processing ? 'Processing...' : 'Play Now'}
+                  content={processing ? 'Processing...' : 'Start Now'}
                   onClick={fetchData}
                   disabled={!allFieldsSelected || processing}
                 />

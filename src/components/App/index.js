@@ -71,6 +71,7 @@ const App = () => {
 
   return (
     <Layout>
+      {/*  TODO: redirect for authentication */}
       {loading && <Loader />}
       {!loading && !isQuizStarted && !isQuizCompleted && (
         <Main startQuiz={startQuiz} />
