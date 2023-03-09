@@ -11,20 +11,22 @@ import { shuffle } from '../../utils';
 const App = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
+  const [major, setMajor] = useState(null);
   const [countdownTime, setCountdownTime] = useState(null);
   const [isQuizStarted, setIsQuizStarted] = useState(false);
   const [isQuizCompleted, setIsQuizCompleted] = useState(false);
   const [resultData, setResultData] = useState(null);
 
-  const startQuiz = (data, countdownTime) => {
+  const startQuiz = (data, countdownTime, major) => {
     setLoading(true);
     setCountdownTime(countdownTime);
 
     setTimeout(() => {
       setData(data);
+      setMajor(major);
       setIsQuizStarted(true);
       setLoading(false);
-    }, 1000);
+    }, 2000);
   };
 
   const endQuiz = resultData => {
@@ -35,7 +37,7 @@ const App = () => {
       setIsQuizCompleted(true);
       setResultData(resultData);
       setLoading(false);
-    }, 2000);
+    }, 1000);
   };
 
   const replayQuiz = () => {
@@ -77,7 +79,7 @@ const App = () => {
         <Main startQuiz={startQuiz} />
       )}
       {!loading && isQuizStarted && (
-        <Quiz data={data} countdownTime={countdownTime} endQuiz={endQuiz} />
+        <Quiz data={data} countdownTime={countdownTime} endQuiz={endQuiz} major={major} />
       )}
       {!loading && isQuizCompleted && (
         <Result {...resultData} replayQuiz={replayQuiz} resetQuiz={resetQuiz} />

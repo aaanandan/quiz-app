@@ -2,22 +2,22 @@ const MAJORS = [
   {
     key: '0',
     text: 'Hindu Philosophy',
-    value: '10'
+    value: 'hinduPhilosophy'
   },
   {
     key: '1',
     text: 'Hindu History',
-    value: '11'
+    value: 'hinduHistory'
   },
   {
     key: '2',
     text: 'Hindu identity',
-    value: '12'
+    value: 'hinduIdentity'
   },
   {
     key: '3',
     text: 'Know your Nation',
-    value: '13'
+    value: 'knowYourNation'
   },
 ];
 

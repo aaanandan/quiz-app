@@ -6,19 +6,25 @@ import {
   Item,
   Divider,
   Button,
+  Image,
+  Grid,
   Icon,
   Message,
   Menu,
   Header
 } from 'semantic-ui-react';
+
 import he from 'he';
 
 import Countdown from '../Countdown';
 import { getLetter } from '../../utils';
-import img from '../../images/kailaasa-flag-triangular-2019-compressed.png'
+import img from '../../images/kailaasa-flag-triangular-2019-compressed.png';
+import anandagandha from '../../images/anandagandha-sm-copy.png'
 
 
-const Quiz = ({ data, countdownTime, endQuiz }) => {
+
+const Quiz = ({ data, countdownTime, endQuiz, major }) => {
+
 
   const [questionIndex, setQuestionIndex] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
@@ -30,34 +36,38 @@ const Quiz = ({ data, countdownTime, endQuiz }) => {
     setUserSlectedAns(name);
   };
 
-  const handleNext = () => {
+
+  const handleNext = (_id) => {
     let point = 0;
-    //TODO:API call to validate answer 
-    if (userSlectedAns === he.decode(data[questionIndex].correct_answer)) {
-      point = 1; //TODO: get Points from api resposne
-    }
+    const api = 'http://localhost:5050/' + major.value + '/' + _id;
+    fetch(api)
+      .then(respone => {
+        return respone.json().then(res => {
+          if (res.correct_answer === userSlectedAns) point = 1;
 
-    const qna = questionsAndAnswers;
-    qna.push({
-      question: he.decode(data[questionIndex].question),
-      user_answer: userSlectedAns,
-      correct_answer: he.decode(data[questionIndex].correct_answer),
-      point
-    });
+          const qna = questionsAndAnswers;
+          qna.push({
+            question: he.decode(data[questionIndex].question),
+            user_answer: userSlectedAns,
+            correct_answer: res.correct_answer,
+            point
+          });
 
-    if (questionIndex === data.length - 1) {
-      return endQuiz({
-        totalQuestions: data.length,
-        correctAnswers: correctAnswers + point,
-        timeTaken,
-        questionsAndAnswers: qna
-      });
-    }
+          if (questionIndex === data.length - 1) {
+            return endQuiz({
+              totalQuestions: data.length,
+              correctAnswers: correctAnswers + point,
+              timeTaken,
+              questionsAndAnswers: qna
+            });
+          }
 
-    setCorrectAnswers(correctAnswers + point);
-    setQuestionIndex(questionIndex + 1);
-    setUserSlectedAns(null);
-    setQuestionsAndAnswers(qna);
+          setCorrectAnswers(correctAnswers + point);
+          setQuestionIndex(questionIndex + 1);
+          setUserSlectedAns(null);
+          setQuestionsAndAnswers(qna);
+        })
+      })
   };
 
   const timeOver = timeTaken => {
@@ -69,21 +79,96 @@ const Quiz = ({ data, countdownTime, endQuiz }) => {
     });
   };
 
+  // const [questionIndex, setQuestionIndex] = useState(0);
+  // const [correctAnswers, setCorrectAnswers] = useState(0);
+  // const [userSlectedAns, setUserSlectedAns] = useState(null);
+  // const [questionsAndAnswers, setQuestionsAndAnswers] = useState([]);
+  // const [timeTaken, setTimeTaken] = useState(null);
+  // const [offline, setOffline] = useState(false);
+
+
+  // const [processing, setProcessing] = useState(false);
+  // const [error, setError] = useState(null);
+
+  // const handleItemClick = (e, { name }) => {
+  //   setUserSlectedAns(name);
+  // };
+
+  // const handleNext = (_id) => {
+  //   let point = 0;
+  //   setProcessing(true);
+  //   if (error) setError(null);
+  //   let qna;
+  //   const api = 'http://localhost:5050/' + major.value + '/' + _id;
+  //   fetch(api)
+  //     .then(respone => {
+  //       return respone.json().then(res => {
+  //         point = res.correct_answer === userSlectedAns ? 1 : 0;
+  //         qna = [...questionsAndAnswers, {
+  //           question: he.decode(data[questionIndex].question),
+  //           user_answer: userSlectedAns,
+  //           correct_answer: res.correct_answer,
+  //           point
+  //         }];
+  //         setQuestionsAndAnswers(qna);
+  //         setCorrectAnswers(correctAnswers + point);
+  //         setUserSlectedAns(null);
+  //         setProcessing(false);
+  //       }).then(() => {
+  //         setQuestionIndex(questionIndex + 1, () => {
+  //           if (questionIndex === data.length - 1) {
+  //             return endQuiz({
+  //               totalQuestions: data.length,
+  //               correctAnswers: correctAnswers,
+  //               timeTaken,
+  //               questionsAndAnswers,
+  //             });
+  //           }
+  //         });
+  //       })
+  //     }).catch(error =>
+  //       setTimeout(() => {
+  //         if (!navigator.onLine) {
+  //           setOffline(true);
+  //         } else {
+  //           setProcessing(false);
+  //           setError(error);
+  //         }
+  //       }, 1000)
+  //     );
+  // };
+
+  // if (questionIndex === data.length - 1) {
+  //   return endQuiz({
+  //     totalQuestions: data.length,
+  //     correctAnswers: correctAnswers,
+  //     timeTaken,
+  //     questionsAndAnswers,
+  //   });
+  // }
+
+  // const timeOver = timeTaken => {
+  //   return endQuiz({
+  //     totalQuestions: data.length,
+  //     correctAnswers,
+  //     timeTaken,
+  //     questionsAndAnswers
+  //   });
+  // };
+
+
+
   return (
     <Item.Header>
       <Container>
         <Segment>
-          <Item.Group divided>
-            <Item>
-              <Item.Image src={img} />
-              {/* <Header as="h1" block floated="left">
-                <Header.Content>
-                  {`Kailasa eligiblity test`}
-                </Header.Content>
-              </Header> */}
-            </Item>
-
-          </Item.Group>
+          <Grid columns={3} divide>
+            <Grid.Row>
+              <Grid.Column key={1}><Image size="medium" verticalAlign="middle" src={img} /></Grid.Column>
+              <Grid.Column key={2} textAlign="center" verticalAlign="middle"><h2>{major.text}</h2></Grid.Column>
+              <Grid.Column key={3}><Image size="small" src={anandagandha} floated="right" /></Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Segment>
         <Segment>
           <Item.Group divided>
@@ -116,7 +201,6 @@ const Quiz = ({ data, countdownTime, endQuiz }) => {
                     {data[questionIndex].options.map((option, i) => {
                       const letter = getLetter(i);
                       const decodedOption = he.decode(option);
-
                       return (
                         <Menu.Item
                           key={decodedOption}
@@ -136,7 +220,7 @@ const Quiz = ({ data, countdownTime, endQuiz }) => {
                   <Button
                     primary
                     content="Next"
-                    onClick={handleNext}
+                    onClick={() => handleNext(he.decode(data[questionIndex]._id))}
                     floated="right"
                     size="big"
                     icon="right chevron"

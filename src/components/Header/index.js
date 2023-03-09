@@ -29,10 +29,16 @@ const Header = () => {
   };
 
   return (
-    <Menu stackable size="massive" style={{ 'background': '#570E0E' }}>
+    <Menu divided stackable size="massive" style={{ 'background': '#570E0E' }}>
       <Menu.Item header style={{ 'background': '#570E0E' }}>
         <h1 style={{ color: 'white' }}>KET</h1>
       </Menu.Item>
+      <Menu.Item header style={{ 'background': '#570E0E' }}>
+        <h2 style={{ color: 'white' }}>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kailasa&nbsp;eligiblity&nbsp;test</h2>
+      </Menu.Item>
+
+
+
       {promptEvent && !isAppInstalled && (
         <Menu.Item position="right">
           <Button
