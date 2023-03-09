@@ -68,7 +68,7 @@ const Main = ({ startQuiz }) => {
     // types : mcq, application, activity
     // const API = `https://opentdb.com/api.php?amount=${numOfQuestions}&category=${major.value}&difficulty=${difficulty}&type=${questionsType}`;
 
-    const api = 'http://localhost:5050/' + major.value;
+    const api = 'https://kerserver.onrender.com/' + major.value;
     fetch(api)
       .then(respone => respone.json())
       .then(data =>

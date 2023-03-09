@@ -39,7 +39,7 @@ const Quiz = ({ data, countdownTime, endQuiz, major }) => {
 
   const handleNext = (_id) => {
     let point = 0;
-    const api = 'http://localhost:5050/' + major.value + '/' + _id;
+    const api = 'https://kerserver.onrender.com/' + major.value + '/' + _id;
     fetch(api)
       .then(respone => {
         return respone.json().then(res => {
