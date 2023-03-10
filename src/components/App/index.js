@@ -5,8 +5,8 @@ import Loader from '../Loader';
 import Main from '../Main';
 import Quiz from '../Quiz';
 import Result from '../Result';
-
 import { shuffle } from '../../utils';
+
 
 const App = () => {
   const [loading, setLoading] = useState(false);
@@ -20,55 +20,48 @@ const App = () => {
   const startQuiz = (data, countdownTime, major) => {
     setLoading(true);
     setCountdownTime(countdownTime);
+    setData(data);
+    setMajor(major);
+    setIsQuizStarted(true);
+    setLoading(false);
 
-    setTimeout(() => {
-      setData(data);
-      setMajor(major);
-      setIsQuizStarted(true);
-      setLoading(false);
-    }, 2000);
+
+
+    // setTimeout(() => {
+    // }, 1000);
   };
 
   const endQuiz = resultData => {
     setLoading(true);
+    setIsQuizStarted(false);
+    setIsQuizCompleted(true);
+    setResultData(resultData);
+    setLoading(false);
 
-    setTimeout(() => {
-      setIsQuizStarted(false);
-      setIsQuizCompleted(true);
-      setResultData(resultData);
-      setLoading(false);
-    }, 1000);
+    // setTimeout(() => {
+
+    // }, 1000);
   };
 
   const replayQuiz = () => {
     setLoading(true);
-
     const shuffledData = shuffle(data);
     shuffledData.forEach(element => {
       element.options = shuffle(element.options);
     });
-
     setData(shuffledData);
-
-    setTimeout(() => {
-      setIsQuizStarted(true);
-      setIsQuizCompleted(false);
-      setResultData(null);
-      setLoading(false);
-    }, 1000);
+    setIsQuizStarted(true);
+    setIsQuizCompleted(false);
+    setResultData(null);
+    setLoading(false);
   };
 
   const resetQuiz = () => {
     setLoading(true);
-
-    setTimeout(() => {
-      setData(null);
-      setCountdownTime(null);
-      setIsQuizStarted(false);
-      setIsQuizCompleted(false);
-      setResultData(null);
-      setLoading(false);
-    }, 1000);
+    setIsQuizStarted(false);
+    setIsQuizCompleted(false);
+    setResultData(null);
+    setLoading(false);
   };
 
   return (

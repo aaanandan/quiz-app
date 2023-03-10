@@ -162,7 +162,7 @@ const Quiz = ({ data, countdownTime, endQuiz, major }) => {
     <Item.Header>
       <Container>
         <Segment>
-          <Grid columns={3} divide>
+          <Grid columns={3}>
             <Grid.Row>
               <Grid.Column key={1}><Image size="medium" verticalAlign="middle" src={img} /></Grid.Column>
               <Grid.Column key={2} textAlign="center" verticalAlign="middle"><h2>{major.text}</h2></Grid.Column>

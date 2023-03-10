@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Menu, Button } from 'semantic-ui-react';
-
+import { useAuth0 } from "@auth0/auth0-react";
 const Header = () => {
   const [promptEvent, setPromptEvent] = useState(null);
   const [appAccepted, setAppAccepted] = useState(false);
+  const { isAuthenticated, isLoading, user } = useAuth0();
 
   let isAppInstalled = false;
 
@@ -31,24 +32,16 @@ const Header = () => {
   return (
     <Menu divided stackable size="massive" style={{ 'background': '#570E0E' }}>
       <Menu.Item header style={{ 'background': '#570E0E' }}>
-        <h1 style={{ color: 'white' }}>KET</h1>
-      </Menu.Item>
-      <Menu.Item header style={{ 'background': '#570E0E' }}>
-        <h2 style={{ color: 'white' }}>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kailasa&nbsp;eligiblity&nbsp;test</h2>
+        <h1 style={{ color: 'white' }}>KET&nbsp;-&nbsp;Kailasa&nbsp;eligiblity&nbsp;test</h1>
       </Menu.Item>
 
-
-
-      {promptEvent && !isAppInstalled && (
-        <Menu.Item position="right">
-          <Button
-            color="teal"
-            icon="cloud download"
-            labelPosition="left"
-            content="Install App"
-            onClick={installApp}
-          />
-        </Menu.Item>
+      {isAuthenticated && !isLoading && (
+        <>
+          <Menu.Item position="right" style={{ 'background': '#570E0E', 'color': 'white' }}>
+            <h1>Welcome {user.nickname}!&nbsp;&nbsp;&nbsp;&nbsp;</h1>
+            <img src={user.picture} alt="" />
+          </Menu.Item>
+        </>
       )}
     </Menu >
   );

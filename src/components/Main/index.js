@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Container,
@@ -12,7 +12,6 @@ import {
   Grid
 } from 'semantic-ui-react';
 
-
 import anandagandha from '../../images/anandagandha-sm-copy.png'
 import img from '../../images/kailaasa-flag-triangular-2019-compressed.png'
 
@@ -23,24 +22,29 @@ import { shuffle } from '../../utils';
 
 import Offline from '../Offline';
 
+import { useAuth0 } from "@auth0/auth0-react";
+
 const Main = ({ startQuiz }) => {
+  const { loginWithRedirect } = useAuth0();
+  const { logout, isAuthenticated, isLoading, user } = useAuth0();
+
+  const [isLoggedin, setIsloggedIn] = useState(false);
   const [major, setMajor] = useState({ value: null, text: null });
   const [numOfQuestions, setNumOfQuestions] = useState(5);
   const [difficulty, setDifficulty] = useState('0');
   const [questionsType, setQuestionsType] = useState('0');
   const [countdownTime, setCountdownTime] = useState({
     hours: 0,
-    minutes: 120,
+    minutes: 4,
     seconds: 0,
   });
-  const [processing, setProcessing] = useState(false);
+  // const [processing, setProcessing] = useState(false);
   const [error, setError] = useState(null);
   const [offline, setOffline] = useState(false);
-
   const handleTimeChange = (e, { name, value }) => {
     setCountdownTime({ ...countdownTime, [name]: value });
   };
-
+  const [loading, setLoading] = useState(false);
   let allFieldsSelected = false;
   if (
     major.value &&
@@ -51,59 +55,46 @@ const Main = ({ startQuiz }) => {
   ) {
     allFieldsSelected = true;
   }
-
-  const fetchData = () => {
-    setProcessing(true);
-    if (error) setError(null);
-
-    //TODO: change API end point to secure API validating token and generate questioner 
-    // 1. Hindu  Philosophy
-    // 2. Hindu History 
-    // 3. Hindu identity 
-    // 4. Know your nation
-
-    // 25 mcq objectives (1 mark)/
-    // 10 application (2 marks each) 
-    // 1 social media activity (5 marks)
-    // types : mcq, application, activity
-    // const API = `https://opentdb.com/api.php?amount=${numOfQuestions}&category=${major.value}&difficulty=${difficulty}&type=${questionsType}`;
-
+  useEffect(() => {
+    // setProcessing(true, () => {
+    if (!loading) return;
     const api = 'https://kerserver.onrender.com/' + major.value;
     fetch(api)
       .then(respone => respone.json())
-      .then(data =>
-        setTimeout(() => {
-          // const { response_code, results } = data;
-          data.forEach(element => {
-            element.options = shuffle([
-              ...element.answers,
-            ]);
-          });
-          setProcessing(false);
-          startQuiz(
-            data,
-            countdownTime.hours * 60 * 60 + countdownTime.minutes * 60 + countdownTime.seconds,
-            major
-          );
-        }, 1000)
-      )
-      .catch(error =>
-        setTimeout(() => {
-          if (!navigator.onLine) {
-            setOffline(true);
-          } else {
-            setProcessing(false);
-            setError(error);
-          }
-        }, 1000)
+      .then(data => {
+        // const { response_code, results } = data;
+        data.forEach(element => {
+          element.options = shuffle([
+            ...element.answers,
+          ]);
+        });
+        // setProcessing(false);
+        startQuiz(
+          data,
+          countdownTime.hours * 60 * 60 + countdownTime.minutes * 60 + countdownTime.seconds,
+          major
+        );
+      })
+      .catch(error => {
+        // setTimeout(() => {
+        if (!navigator.onLine) {
+          setOffline(true);
+        } else {
+          // setProcessing(false);
+          setError(error);
+        }
+        // }, 1000)
+      }
       );
-  };
+    // });
+    if (error) setError(null);
+  }, [loading]);
 
   if (offline) return <Offline />;
   return (
     <Container>
       <Segment>
-        <Grid columns={3} divide>
+        <Grid columns={3}>
           <Grid.Row>
             <Grid.Column key={1}><Image size="medium" verticalAlign="middle" src={img} /></Grid.Column>
             <Grid.Column key={2} textAlign="center" verticalAlign="middle"><h2>Majors</h2></Grid.Column>
@@ -111,9 +102,8 @@ const Main = ({ startQuiz }) => {
           </Grid.Row>
         </Grid>
       </Segment>
-
       <Segment>
-        <Item.Group divided>
+        <Item.Group >
           <Item>
             <Item.Content>
               {error && (
@@ -125,14 +115,15 @@ const Main = ({ startQuiz }) => {
               <Item.Meta>
                 <br />
                 <Item.Description>
-                  <h3>Please choose a major to start, complete all the majors</h3>
+                  {isAuthenticated && !isLoading ? <h3>Please choose a major to start, complete all the majors</h3> : <h3>Please login to start</h3>}
                 </Item.Description>
-                <Menu vertical fluid size="massive">
+                <Menu vertical fluid size="massive" >
                   {MAJORS.map((ele, i) => {
                     return (
                       <Menu.Item
                         key={i}
                         name={ele.text}
+                        disabled={!isAuthenticated}
                         active={major.value === ele.value}
                         onClick={() => { setMajor(ele) }}>
                         <b style={{ marginRight: '8px' }}>{i + 1}. </b>
@@ -145,27 +136,52 @@ const Main = ({ startQuiz }) => {
               <Divider />
               <Divider />
               <Item.Extra>
+                {!isAuthenticated && !isLoading ? <Button primary
+                  size="big"
+                  icon="user"
+                  labelPosition="left"
+                  content={'Login'}
+                  onClick={() => {
+                    loginWithRedirect();
+
+                  }}
+                  disabled={allFieldsSelected || loading} /> :
+                  <Button
+                    onClick={() => logout({ logoutParams: { returnTo: window.location.href } })}
+                    size="big"
+                    icon="user"
+                    labelPosition="left"
+                    content={'Logout'}
+                    disabled={allFieldsSelected || loading} />}
                 <Button
                   primary
                   size="big"
                   icon="play"
                   labelPosition="left"
-                  content={processing ? 'Processing...' : 'Start Now'}
-                  onClick={fetchData}
-                  disabled={!allFieldsSelected || processing}
+                  content={loading ? 'Processing...' : 'Start Now'}
+                  onClick={() => setLoading(true)}
+                  disabled={!allFieldsSelected || loading}
+                  floated="right"
                 />
               </Item.Extra>
             </Item.Content>
           </Item>
         </Item.Group>
       </Segment>
+      {/* <Segment>
+        <Grid columns={3}>
+          <Grid.Row>
+            <Grid.Column key={1}><h3>Welcome &nbsp;&nbsp;&nbsp;&nbsp; {user.name}</h3></Grid.Column>
+            <Grid.Column key={2} textAlign="center" verticalAlign="middle"><h2>&nbsp;&nbsp;&nbsp;&nbsp;{user.email}</h2></Grid.Column>
+            <Grid.Column key={3}><h2>{user.phone_number} {user.address} </h2></Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Segment> */}
       <br />
-    </Container>
+    </Container >
   );
 };
-
 Main.propTypes = {
   startQuiz: PropTypes.func.isRequired,
 };
-
 export default Main;
