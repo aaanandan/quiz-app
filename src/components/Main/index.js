@@ -14,6 +14,7 @@ import {
 
 import anandagandha from '../../images/anandagandha-sm-copy.png'
 import img from '../../images/kailaasa-flag-triangular-2019-compressed.png'
+import Loader from '../Loader';
 
 import {
   MAJORS,
@@ -26,7 +27,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const Main = ({ startQuiz }) => {
   const { loginWithRedirect } = useAuth0();
-  const { logout, isAuthenticated, isLoading, user } = useAuth0();
+  const { logout, isAuthenticated, isLoading, user, getAccessTokenSilently } = useAuth0();
 
   const [isLoggedin, setIsloggedIn] = useState(false);
   const [major, setMajor] = useState({ value: null, text: null });
@@ -56,37 +57,38 @@ const Main = ({ startQuiz }) => {
     allFieldsSelected = true;
   }
   useEffect(() => {
-    // setProcessing(true, () => {
     if (!loading) return;
-    const api = 'https://kerserver.onrender.com/' + major.value;
-    fetch(api)
-      .then(respone => respone.json())
-      .then(data => {
-        // const { response_code, results } = data;
-        data.forEach(element => {
-          element.options = shuffle([
-            ...element.answers,
-          ]);
-        });
-        // setProcessing(false);
-        startQuiz(
-          data,
-          countdownTime.hours * 60 * 60 + countdownTime.minutes * 60 + countdownTime.seconds,
-          major
-        );
-      })
-      .catch(error => {
-        // setTimeout(() => {
-        if (!navigator.onLine) {
-          setOffline(true);
-        } else {
+    getAccessTokenSilently().then(token => {
+      const api = 'https://kerserver.onrender.com/' + major.value;
+      fetch(api, {
+        headers: { Authorization: `Bearer ${token}` }
+      }).then(respone => respone.json())
+        .then(data => {
+          // const { response_code, results } = data;
+          data.forEach(element => {
+            element.options = shuffle([
+              ...element.answers,
+            ]);
+          });
           // setProcessing(false);
-          setError(error);
+          startQuiz(
+            data,
+            countdownTime.hours * 60 * 60 + countdownTime.minutes * 60 + countdownTime.seconds,
+            major
+          );
+        })
+        .catch(error => {
+          // setTimeout(() => {
+          if (!navigator.onLine) {
+            setOffline(true);
+          } else {
+            // setProcessing(false);
+            setError(error);
+          }
+          // }, 1000)
         }
-        // }, 1000)
-      }
-      );
-    // });
+        );
+    });
     if (error) setError(null);
   }, [loading]);
 
@@ -117,6 +119,7 @@ const Main = ({ startQuiz }) => {
                 <Item.Description>
                   {isAuthenticated && !isLoading ? <h3>Please choose a major to start, complete all the majors</h3> : <h3>Please login to start</h3>}
                 </Item.Description>
+
                 <Menu vertical fluid size="massive" >
                   {MAJORS.map((ele, i) => {
                     return (
@@ -164,6 +167,8 @@ const Main = ({ startQuiz }) => {
                   floated="right"
                 />
               </Item.Extra>
+              {loading && <><br /> <Loader /></>}
+
             </Item.Content>
           </Item>
         </Item.Group>
