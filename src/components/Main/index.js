@@ -15,9 +15,10 @@ import {
 import anandagandha from '../../images/anandagandha-sm-copy.png'
 import img from '../../images/kailaasa-flag-triangular-2019-compressed.png'
 import Loader from '../Loader';
+import axios from 'axios';
 
 import {
-  MAJORS,
+  MAJORS, API_URL
 } from '../../constants';
 import { shuffle } from '../../utils';
 
@@ -29,7 +30,7 @@ const Main = ({ startQuiz }) => {
   const { loginWithRedirect } = useAuth0();
   const { logout, isAuthenticated, isLoading, user, getAccessTokenSilently } = useAuth0();
 
-  const [isLoggedin, setIsloggedIn] = useState(false);
+  // const [isLoggedin, setIsloggedIn] = useState(false);
   const [major, setMajor] = useState({ value: null, text: null });
   const [numOfQuestions, setNumOfQuestions] = useState(5);
   const [difficulty, setDifficulty] = useState('0');
@@ -39,6 +40,8 @@ const Main = ({ startQuiz }) => {
     minutes: 4,
     seconds: 0,
   });
+  const [data, setData] = useState(null);
+
   // const [processing, setProcessing] = useState(false);
   const [error, setError] = useState(null);
   const [offline, setOffline] = useState(false);
@@ -56,41 +59,48 @@ const Main = ({ startQuiz }) => {
   ) {
     allFieldsSelected = true;
   }
+
+  const api = API_URL + '/getQuestions';
+  // const fetchData = async () => {
+  //   const response = await fetch("https://jsonplaceholder.typicode.com/users")
+  //   const data = await response.json()
+  // }
+
+  // const getData = async () => {
+  //   const response = await fetch(api, {
+  //     method: 'POST',
+  //     body: JSON.stringify({ major: major.value, user }),
+  //     headers: { "Content-type": "application/json; charset=UTF-8" }
+  //   });
+  //   let data = await response.json();
+  //   data = data.map(element => {
+  //     console.log(element);
+  //     element.options = shuffle([
+  //       ...element.answers,
+  //     ]);
+  //     setData(data => data);
+  //   });
+  // };
   useEffect(() => {
     if (!loading) return;
-    getAccessTokenSilently().then(token => {
-      const api = 'https://kerserver.onrender.com/' + major.value;
-      fetch(api, {
-        headers: { Authorization: `Bearer ${token}` }
-      }).then(respone => respone.json())
-        .then(data => {
-          // const { response_code, results } = data;
-          data.forEach(element => {
-            element.options = shuffle([
-              ...element.answers,
-            ]);
-          });
-          // setProcessing(false);
-          startQuiz(
-            data,
-            countdownTime.hours * 60 * 60 + countdownTime.minutes * 60 + countdownTime.seconds,
-            major
-          );
-        })
-        .catch(error => {
-          // setTimeout(() => {
-          if (!navigator.onLine) {
-            setOffline(true);
-          } else {
-            // setProcessing(false);
-            setError(error);
-          }
-          // }, 1000)
-        }
-        );
-    });
-    if (error) setError(null);
-  }, [loading]);
+
+    axios.post(api, { major: major.value, ...user })
+      .then(function (response) {
+        let data = response.data;
+        data = data.map(element => {
+          element.options = shuffle([
+            ...element.answers,
+          ]);
+        });
+        let sec = countdownTime.hours * 60 * 60 + countdownTime.minutes * 60 + countdownTime.seconds;
+        startQuiz(response.data, sec, major);
+      })
+      .catch(function (error) {
+        setError(error);
+      });
+
+
+  }, [loading, major.value]);
 
   if (offline) return <Offline />;
   return (
@@ -167,12 +177,11 @@ const Main = ({ startQuiz }) => {
                   floated="right"
                 />
               </Item.Extra>
-              {loading && <><br /> <Loader /></>}
-
             </Item.Content>
           </Item>
         </Item.Group>
       </Segment>
+      {loading && <><br /> <Loader /></>}
       {/* <Segment>
         <Grid columns={3}>
           <Grid.Row>

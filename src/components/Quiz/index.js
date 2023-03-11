@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Container,
@@ -15,17 +15,17 @@ import {
 } from 'semantic-ui-react';
 
 import he from 'he';
-
 import Countdown from '../Countdown';
 import { getLetter } from '../../utils';
 import img from '../../images/kailaasa-flag-triangular-2019-compressed.png';
 import anandagandha from '../../images/anandagandha-sm-copy.png'
+import { useAuth0 } from "@auth0/auth0-react";
 
-
+import { API_URL } from '../../constants';
+import Loader from '../Loader';
 
 const Quiz = ({ data, countdownTime, endQuiz, major }) => {
-
-
+  const { user } = useAuth0();
   const [questionIndex, setQuestionIndex] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [userSlectedAns, setUserSlectedAns] = useState(null);
@@ -36,15 +36,19 @@ const Quiz = ({ data, countdownTime, endQuiz, major }) => {
     setUserSlectedAns(name);
   };
 
-
   const handleNext = (_id) => {
     let point = 0;
-    const api = 'https://kerserver.onrender.com/' + major.value + '/' + _id;
-    fetch(api)
+    const api = API_URL + '/validateAnswer';
+
+    fetch(api, {
+      method: 'POST',
+      body: JSON.stringify({ major: major.value, _questionId: _id, userSlectedAns, user }),
+      headers: { "Content-type": "application/json; charset=UTF-8" }
+
+    })
       .then(respone => {
         return respone.json().then(res => {
           if (res.correct_answer === userSlectedAns) point = 1;
-
           const qna = questionsAndAnswers;
           qna.push({
             question: he.decode(data[questionIndex].question),
@@ -78,6 +82,11 @@ const Quiz = ({ data, countdownTime, endQuiz, major }) => {
       questionsAndAnswers
     });
   };
+
+  // useEffect(() => {
+  //   // console.log(data)
+  //   // if (!data) return;
+  // }, []);
 
   // const [questionIndex, setQuestionIndex] = useState(0);
   // const [correctAnswers, setCorrectAnswers] = useState(0);
@@ -155,9 +164,7 @@ const Quiz = ({ data, countdownTime, endQuiz, major }) => {
   //     questionsAndAnswers
   //   });
   // };
-
-
-
+  if (!data) return (<><br /> <Loader /></>);
   return (
     <Item.Header>
       <Container>
