@@ -26,7 +26,7 @@ import Offline from '../Offline';
 
 import { useAuth0 } from "@auth0/auth0-react";
 
-const Main = ({ startQuiz }) => {
+const Main = ({ startQuiz, attempts }) => {
   const { loginWithRedirect } = useAuth0();
   const { logout, isAuthenticated, isLoading, user, getAccessTokenSilently } = useAuth0();
 
@@ -133,15 +133,19 @@ const Main = ({ startQuiz }) => {
                 <Menu vertical fluid size="massive" >
                   {MAJORS.map((ele, i) => {
                     return (
-                      <Menu.Item
-                        key={i}
-                        name={ele.text}
-                        disabled={!isAuthenticated}
-                        active={major.value === ele.value}
-                        onClick={() => { setMajor(ele) }}>
-                        <b style={{ marginRight: '8px' }}>{i + 1}. </b>
-                        {ele.text}
-                      </Menu.Item>
+                      <>
+                        <Menu.Item
+                          key={i}
+                          name={ele.text}
+                          disabled={!isAuthenticated}
+                          active={major.value === ele.value}
+                          onClick={() => { setMajor(ele) }}>
+                          <b style={{ marginRight: '8px' }}>{i + 1}. </b>
+                          {ele.text}<span style={{ margin: '30px', alignSelf: "right", color: 'grey' }}>
+                            {isAuthenticated && attempts && " -you have alrealy attended  " + attempts[ele.value] + " times"}
+                          </span>
+                        </Menu.Item>
+                      </>
                     );
                   })}
                 </Menu>

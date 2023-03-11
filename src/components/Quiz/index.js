@@ -40,9 +40,17 @@ const Quiz = ({ data, countdownTime, endQuiz, major }) => {
     let point = 0;
     const api = API_URL + '/validateAnswer';
 
+    let question = {
+      _questionId: _id,
+      question: he.decode(data[questionIndex].question),
+      user_answer: userSlectedAns,
+      correct_answer: '',
+      point: 0
+    }
+
     fetch(api, {
       method: 'POST',
-      body: JSON.stringify({ major: major.value, _questionId: _id, userSlectedAns, user }),
+      body: JSON.stringify({ major: major.value, question, email: user.email, questionsAndAnswers }),
       headers: { "Content-type": "application/json; charset=UTF-8" }
 
     })
@@ -83,87 +91,6 @@ const Quiz = ({ data, countdownTime, endQuiz, major }) => {
     });
   };
 
-  // useEffect(() => {
-  //   // console.log(data)
-  //   // if (!data) return;
-  // }, []);
-
-  // const [questionIndex, setQuestionIndex] = useState(0);
-  // const [correctAnswers, setCorrectAnswers] = useState(0);
-  // const [userSlectedAns, setUserSlectedAns] = useState(null);
-  // const [questionsAndAnswers, setQuestionsAndAnswers] = useState([]);
-  // const [timeTaken, setTimeTaken] = useState(null);
-  // const [offline, setOffline] = useState(false);
-
-
-  // const [processing, setProcessing] = useState(false);
-  // const [error, setError] = useState(null);
-
-  // const handleItemClick = (e, { name }) => {
-  //   setUserSlectedAns(name);
-  // };
-
-  // const handleNext = (_id) => {
-  //   let point = 0;
-  //   setProcessing(true);
-  //   if (error) setError(null);
-  //   let qna;
-  //   const api = 'http://localhost:5050/' + major.value + '/' + _id;
-  //   fetch(api)
-  //     .then(respone => {
-  //       return respone.json().then(res => {
-  //         point = res.correct_answer === userSlectedAns ? 1 : 0;
-  //         qna = [...questionsAndAnswers, {
-  //           question: he.decode(data[questionIndex].question),
-  //           user_answer: userSlectedAns,
-  //           correct_answer: res.correct_answer,
-  //           point
-  //         }];
-  //         setQuestionsAndAnswers(qna);
-  //         setCorrectAnswers(correctAnswers + point);
-  //         setUserSlectedAns(null);
-  //         setProcessing(false);
-  //       }).then(() => {
-  //         setQuestionIndex(questionIndex + 1, () => {
-  //           if (questionIndex === data.length - 1) {
-  //             return endQuiz({
-  //               totalQuestions: data.length,
-  //               correctAnswers: correctAnswers,
-  //               timeTaken,
-  //               questionsAndAnswers,
-  //             });
-  //           }
-  //         });
-  //       })
-  //     }).catch(error =>
-  //       setTimeout(() => {
-  //         if (!navigator.onLine) {
-  //           setOffline(true);
-  //         } else {
-  //           setProcessing(false);
-  //           setError(error);
-  //         }
-  //       }, 1000)
-  //     );
-  // };
-
-  // if (questionIndex === data.length - 1) {
-  //   return endQuiz({
-  //     totalQuestions: data.length,
-  //     correctAnswers: correctAnswers,
-  //     timeTaken,
-  //     questionsAndAnswers,
-  //   });
-  // }
-
-  // const timeOver = timeTaken => {
-  //   return endQuiz({
-  //     totalQuestions: data.length,
-  //     correctAnswers,
-  //     timeTaken,
-  //     questionsAndAnswers
-  //   });
-  // };
   if (!data) return (<><br /> <Loader /></>);
   return (
     <Item.Header>
