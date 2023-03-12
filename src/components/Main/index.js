@@ -4,7 +4,6 @@ import {
   Container,
   Segment,
   Item,
-  Divider,
   Button,
   Message,
   Menu,
@@ -61,26 +60,6 @@ const Main = ({ startQuiz, attempts }) => {
   }
 
   const api = API_URL + '/getQuestions';
-  // const fetchData = async () => {
-  //   const response = await fetch("https://jsonplaceholder.typicode.com/users")
-  //   const data = await response.json()
-  // }
-
-  // const getData = async () => {
-  //   const response = await fetch(api, {
-  //     method: 'POST',
-  //     body: JSON.stringify({ major: major.value, user }),
-  //     headers: { "Content-type": "application/json; charset=UTF-8" }
-  //   });
-  //   let data = await response.json();
-  //   data = data.map(element => {
-  //     console.log(element);
-  //     element.options = shuffle([
-  //       ...element.answers,
-  //     ]);
-  //     setData(data => data);
-  //   });
-  // };
   useEffect(() => {
     if (!loading) return;
 
@@ -127,7 +106,7 @@ const Main = ({ startQuiz, attempts }) => {
               <Item.Meta>
                 <br />
                 <Item.Description>
-                  {isAuthenticated && !isLoading ? <h3>Please choose a major to start, complete all the majors</h3> : <h3>Please login to start</h3>}
+                  {isAuthenticated && !isLoading ? <h3>Please choose a major to start. Complete all the majors.</h3> : <h3>Please login to start</h3>}
                 </Item.Description>
 
                 <Menu vertical fluid size="massive" >
@@ -137,64 +116,60 @@ const Main = ({ startQuiz, attempts }) => {
                         <Menu.Item
                           key={i}
                           name={ele.text}
-                          disabled={!isAuthenticated}
+                          disabled={!isAuthenticated || !attempts}
                           active={major.value === ele.value}
                           onClick={() => { setMajor(ele) }}>
-                          <b style={{ marginRight: '8px' }}>{i + 1}. </b>
-                          {ele.text}<span style={{ margin: '30px', alignSelf: "right", color: 'grey' }}>
-                            {isAuthenticated && attempts && " -you have alrealy attended  " + attempts[ele.value] + " times"}
-                          </span>
+                          <b style={{ marginRight: '8px' }}>{i + 1}. </b>{ele.text}
+                          <span style={{ margin: '8px', color: 'grey', fontSize: '10px' }}>{isAuthenticated && attempts && attempts[ele.value] + " attemps"}</span>
+                          {(isAuthenticated && !attempts) && <span style={{ alignSelf: "right" }}>...</span>}
                         </Menu.Item>
                       </>
                     );
                   })}
                 </Menu>
               </Item.Meta>
-              <Divider />
-              <Divider />
               <Item.Extra>
-                {!isAuthenticated && !isLoading ? <Button primary
-                  size="big"
-                  icon="user"
-                  labelPosition="left"
-                  content={'Login'}
-                  onClick={() => {
-                    loginWithRedirect();
+                <Grid columns={2}>
+                  <Grid.Row>
+                    <Grid.Column key={1}>
+                      {!isAuthenticated && !isLoading ? <Button primary
+                        size="small"
+                        icon="user"
+                        labelPosition="left"
+                        content={'Login'}
+                        onClick={() => {
+                          loginWithRedirect();
 
-                  }}
-                  disabled={allFieldsSelected || loading} /> :
-                  <Button
-                    onClick={() => logout({ logoutParams: { returnTo: window.location.href } })}
-                    size="big"
-                    icon="user"
-                    labelPosition="left"
-                    content={'Logout'}
-                    disabled={allFieldsSelected || loading} />}
-                <Button
-                  primary
-                  size="big"
-                  icon="play"
-                  labelPosition="left"
-                  content={loading ? 'Processing...' : 'Start Now'}
-                  onClick={() => setLoading(true)}
-                  disabled={!allFieldsSelected || loading}
-                  floated="right"
-                />
+                        }}
+                        disabled={allFieldsSelected || loading} /> :
+                        <Button
+                          onClick={() => logout({ logoutParams: { returnTo: window.location.href } })}
+                          size="small"
+                          icon="user"
+                          labelPosition="left"
+                          content={'Logout'}
+                          disabled={allFieldsSelected || loading} />}
+                    </Grid.Column>
+                    <Grid.Column floated="right">
+                      <Button
+                        primary
+                        size="small"
+                        icon="play"
+                        labelPosition="left"
+                        content={loading ? 'Processing...' : 'Start'}
+                        onClick={() => setLoading(true)}
+                        disabled={!allFieldsSelected || loading}
+                        floated="right"
+                      />
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
               </Item.Extra>
             </Item.Content>
           </Item>
         </Item.Group>
       </Segment>
       {loading && <><br /> <Loader /></>}
-      {/* <Segment>
-        <Grid columns={3}>
-          <Grid.Row>
-            <Grid.Column key={1}><h3>Welcome &nbsp;&nbsp;&nbsp;&nbsp; {user.name}</h3></Grid.Column>
-            <Grid.Column key={2} textAlign="center" verticalAlign="middle"><h2>&nbsp;&nbsp;&nbsp;&nbsp;{user.email}</h2></Grid.Column>
-            <Grid.Column key={3}><h2>{user.phone_number} {user.address} </h2></Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Segment> */}
       <br />
     </Container >
   );

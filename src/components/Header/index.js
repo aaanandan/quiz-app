@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Menu, Button } from 'semantic-ui-react';
 import { useAuth0 } from "@auth0/auth0-react";
+
+import loadingImg from '../../images/writing-loading.gif'
+
 const Header = () => {
   const [promptEvent, setPromptEvent] = useState(null);
   const [appAccepted, setAppAccepted] = useState(false);
@@ -43,6 +46,14 @@ const Header = () => {
           </Menu.Item>
         </>
       )}
+      {(isLoading) && (
+        <>
+          <Menu.Item position="right">
+            <img src={loadingImg} alt="" />
+          </Menu.Item>
+        </>
+      )
+      }
     </Menu >
   );
 };
