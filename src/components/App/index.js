@@ -58,20 +58,27 @@ const App = () => {
     setResultData(null);
     setLoading(false);
   };
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
     if (!isAuthenticated) return;
     const api = API_URL + '/attempts';
-    axios.post(api, { ...user })
-      .then(function (response) {
-        let data = response.data;
-        setAttempts(data);
-        console.log(data);
+    getAccessTokenSilently().then(token => {
+
+      axios.post(api, { ...user }, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+        .then(function (response) {
+          let data = response.data;
+          setAttempts(data);
+          console.log(data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    });
   }, [isAuthenticated]);
 
   return (

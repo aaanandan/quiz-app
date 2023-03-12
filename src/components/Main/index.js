@@ -59,12 +59,17 @@ const Main = ({ startQuiz, attempts }) => {
     allFieldsSelected = true;
   }
 
+
   const api = API_URL + '/getQuestions';
   useEffect(() => {
     if (!loading) return;
 
-    axios.post(api, { major: major.value, ...user })
-      .then(function (response) {
+    getAccessTokenSilently().then((token) => {
+      axios.post(api, { major: major.value, ...user }, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+      }).then(function (response) {
         let data = response.data;
         data = data.map(element => {
           element.options = shuffle([
@@ -74,10 +79,10 @@ const Main = ({ startQuiz, attempts }) => {
         let sec = countdownTime.hours * 60 * 60 + countdownTime.minutes * 60 + countdownTime.seconds;
         startQuiz(response.data, sec, major);
       })
-      .catch(function (error) {
-        setError(error);
-      });
-
+        .catch(function (error) {
+          setError(error);
+        });
+    })
 
   }, [loading, major.value]);
 

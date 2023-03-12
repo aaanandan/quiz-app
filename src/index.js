@@ -11,7 +11,8 @@ ReactDOM.render(
       domain="dev-88bircurddzvffqn.us.auth0.com"
       clientId="IlSZ7rPwgaPRDt81GGYnC7W138mdDyWA"
       authorizationParams={{
-        redirect_uri: window.location.href
+        audience: 'kerserver.onrender.com',
+        redirect_uri: window.location.href,
       }}>
       <App />
     </Auth0Provider>

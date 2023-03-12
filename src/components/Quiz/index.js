@@ -25,7 +25,7 @@ import { API_URL } from '../../constants';
 import Loader from '../Loader';
 
 const Quiz = ({ data, countdownTime, endQuiz, major }) => {
-  const { user } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
   const [questionIndex, setQuestionIndex] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [userSlectedAns, setUserSlectedAns] = useState(null);
@@ -48,13 +48,12 @@ const Quiz = ({ data, countdownTime, endQuiz, major }) => {
       point: 0
     }
 
-    fetch(api, {
-      method: 'POST',
-      body: JSON.stringify({ major: major.value, question, email: user.email, questionsAndAnswers }),
-      headers: { "Content-type": "application/json; charset=UTF-8" }
-
-    })
-      .then(respone => {
+    getAccessTokenSilently().then((token) => {
+      fetch(api, {
+        method: 'POST',
+        body: JSON.stringify({ major: major.value, question, email: user.email, questionsAndAnswers }),
+        headers: { "Content-type": "application/json; charset=UTF-8", "Authorization": "Bearer " + token }
+      }).then(respone => {
         return respone.json().then(res => {
           if (res.correct_answer === userSlectedAns) point = 1;
           const qna = questionsAndAnswers;
@@ -80,6 +79,7 @@ const Quiz = ({ data, countdownTime, endQuiz, major }) => {
           setQuestionsAndAnswers(qna);
         })
       })
+    });
   };
 
   const timeOver = timeTaken => {
