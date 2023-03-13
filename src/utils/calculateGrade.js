@@ -1,6 +1,6 @@
 const calculateGrade = score => {
 
-  if ( score === null || score === undefined || typeof score !== 'number' ) {
+  if (score === null || score === undefined || typeof score !== 'number') {
     return null;
   }
 
@@ -38,9 +38,9 @@ const calculateGrade = score => {
   }
 
   if (score >= 60) {
-    remarks = 'Congratulations, YOU PASSED!';
+    remarks = 'Congratulations, on mutlipe choice questions you passed!';
   } else {
-    remarks = 'Sorry, YOU FAILED!';
+    remarks = 'Sorry, YOU FAILED mutlipe choice questions.';
   }
 
   return {

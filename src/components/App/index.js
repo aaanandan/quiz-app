@@ -73,7 +73,6 @@ const App = () => {
         .then(function (response) {
           let data = response.data;
           setAttempts(data);
-          console.log(data);
         })
         .catch(function (error) {
           console.log(error);

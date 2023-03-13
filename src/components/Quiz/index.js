@@ -11,7 +11,9 @@ import {
   Icon,
   Message,
   Menu,
-  Header
+  Header,
+  Form,
+  TextArea
 } from 'semantic-ui-react';
 
 import he from 'he';
@@ -36,6 +38,13 @@ const Quiz = ({ data, countdownTime, endQuiz, major }) => {
     setUserSlectedAns(name);
   };
 
+
+  const handleChange = (e, { name, value }) => {
+    let ans = { ...userSlectedAns };
+    ans[name] = value;
+    setUserSlectedAns(ans);
+  };
+
   const handleNext = (_id) => {
     let point = 0;
     const api = API_URL + '/validateAnswer';
@@ -43,6 +52,7 @@ const Quiz = ({ data, countdownTime, endQuiz, major }) => {
     let question = {
       _questionId: _id,
       question: he.decode(data[questionIndex].question),
+      type: he.decode(data[questionIndex].type),
       user_answer: userSlectedAns,
       correct_answer: '',
       point: 0
@@ -59,20 +69,21 @@ const Quiz = ({ data, countdownTime, endQuiz, major }) => {
           const qna = questionsAndAnswers;
           qna.push({
             question: he.decode(data[questionIndex].question),
+            type: he.decode(data[questionIndex].type),
             user_answer: userSlectedAns,
             correct_answer: res.correct_answer,
-            point
+            point,
+
           });
 
           if (questionIndex === data.length - 1) {
             return endQuiz({
-              totalQuestions: data.length,
+              totalQuestions: data.filter(rec => rec.type === 'mcq').length,
               correctAnswers: correctAnswers + point,
               timeTaken,
-              questionsAndAnswers: qna
+              questionsAndAnswers: qna.filter(rec => rec.type === 'mcq')
             });
           }
-
           setCorrectAnswers(correctAnswers + point);
           setQuestionIndex(questionIndex + 1);
           setUserSlectedAns(null);
@@ -84,10 +95,10 @@ const Quiz = ({ data, countdownTime, endQuiz, major }) => {
 
   const timeOver = timeTaken => {
     return endQuiz({
-      totalQuestions: data.length,
+      totalQuestions: data.filter(rec => rec.type === 'mcq').length,
       correctAnswers,
       timeTaken,
-      questionsAndAnswers
+      questionsAndAnswers: questionsAndAnswers.filter(rec => rec.type === 'mcq')
     });
   };
 
@@ -127,27 +138,60 @@ const Quiz = ({ data, countdownTime, endQuiz, major }) => {
                     <b>{`Q. ${he.decode(data[questionIndex].question)}`}</b>
                   </Message>
                   <br />
-                  <Item.Description>
-                    <h3>Please choose one of the following answers:</h3>
-                  </Item.Description>
-                  <Divider />
-                  <Menu vertical fluid size="massive">
-                    {data[questionIndex].options.map((option, i) => {
-                      const letter = getLetter(i);
-                      const decodedOption = he.decode(option);
-                      return (
-                        <Menu.Item
-                          key={decodedOption}
-                          name={decodedOption}
-                          active={userSlectedAns === decodedOption}
-                          onClick={handleItemClick}
-                        >
-                          <b style={{ marginRight: '8px' }}>{letter}</b>
-                          {decodedOption}
-                        </Menu.Item>
-                      );
-                    })}
-                  </Menu>
+                  {he.decode(data[questionIndex].type) === 'mcq' &&
+                    <>
+                      <Item.Description>
+                        <h3>Please choose one of the following answers:</h3>
+                      </Item.Description>
+                      <Divider />
+                      <Menu vertical fluid size="massive">
+                        {data[questionIndex].options.map((option, i) => {
+                          const letter = getLetter(i);
+                          const decodedOption = he.decode(option);
+                          return (
+                            <Menu.Item
+                              key={'mcq' + i}
+                              name={decodedOption}
+                              active={userSlectedAns === decodedOption}
+                              onClick={handleItemClick}>
+                              <b style={{ marginRight: '8px' }}>{letter}</b>
+                              {decodedOption}
+                            </Menu.Item>
+                          );
+                        })}
+
+                      </Menu>
+                    </>
+                  }
+                  {(he.decode(data[questionIndex].type) === 'application' || he.decode(data[questionIndex].type) === 'activity') &&
+                    <>
+                      <Item.Description>
+                        <h3>Please fill the deatils</h3>
+                      </Item.Description>
+
+                      <Menu vertical fluid size="massive">
+                        <Form>
+                          {data[questionIndex].options.map((option, i) => {
+                            const letter = getLetter(i);
+                            const decodedOption = he.decode(option);
+                            return (
+                              <>
+                                <Menu.Item
+                                  key={"others" + i}
+                                  name={decodedOption}
+                                >
+                                  <b style={{ marginRight: '8px' }}>{letter}</b>
+                                  {decodedOption}
+                                </Menu.Item>
+                                <TextArea key={"othersAns" + i} onChange={handleChange} name={decodedOption} value={userSlectedAns && userSlectedAns[decodedOption] || ''} placeholder='Tell us more' style={{ minHeight: 100 }} />
+                              </>
+                            );
+                          })
+                          }
+                        </Form>
+                      </Menu>
+                    </>
+                  }
                 </Item.Meta>
                 <Divider />
                 <Item.Extra>

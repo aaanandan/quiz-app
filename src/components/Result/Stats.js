@@ -40,8 +40,10 @@ const Stats = ({
         Time Taken:{' '}
         {`${Number(hours)}h ${Number(minutes)}m ${Number(seconds)}s`}
       </Header>
+      <Header as="h1" textAlign="center" block>
+        we will vaidate apllication and activy and update you.</Header>
       <div style={{ marginTop: 35 }}>
-        <Button
+        {/* <Button
           primary
           content="Play Again"
           onClick={replayQuiz}
@@ -49,7 +51,7 @@ const Stats = ({
           icon="redo"
           labelPosition="left"
           style={{ marginRight: 15, marginBottom: 8 }}
-        />
+        /> */}
         <Button
           color="teal"
           content="Back to Home"
@@ -59,7 +61,7 @@ const Stats = ({
           labelPosition="left"
           style={{ marginBottom: 8 }}
         />
-        <ShareButton />
+        {/* <ShareButton /> */}
       </div>
     </Segment>
   );
