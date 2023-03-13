@@ -1,0 +1,546 @@
+[
+  {
+    "_id": {
+      "$oid": "6408bd11c515c23447160cab"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Who was the King of Bhramavarta",
+    "correct_answer": "Swayambhava Manu",
+    "answers": [
+      "Swayambhava Manu",
+      "Pulaha",
+      "Pulastya",
+      "Angirasa"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408b9f0c515c23447160ca9"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Agamas consists of four parts. They are",
+    "correct_answer": "Charya pada, Kriya pada, Yoga pada, Jnana pada",
+    "answers": [
+      "Karma yoga, Bhakti yoga, Raja yoga and Jnana yoga",
+      "Charya pada, Kriya pada, Yoga pada, Jnana pada",
+      "Salokya, Sarupya, Sayujya, Samipya"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408bfc0c515c23447160cb0"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Masyavarata (Vishnu) pulled the ship having Manu and landed near",
+    "correct_answer": "Kanyakumari",
+    "answers": [
+      "Sri Lankha",
+      "Kanyakumari",
+      "Dwaraka",
+      "Orissa"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408c31dc515c23447160cba"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "One of the 6 sat-darshana tattva - Nyaya Sutras originated from",
+    "correct_answer": "Risi Goutama",
+    "answers": [
+      "Risi Goutama",
+      "Kapila",
+      "Vyasa",
+      "Jaimini"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408c2b1c515c23447160cb9"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Who built the Kanchi Kamakshi Amman temple",
+    "correct_answer": "Tondaiman",
+    "answers": [
+      "Tondaiman",
+      "Mahendravarman 1",
+      "Shima Vishnu",
+      "Aditya 1"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408bdc4c515c23447160cad"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Kingdom of Ayodhya was founded by",
+    "correct_answer": "King Manu & his wife Ida",
+    "answers": [
+      "King Dasharatha",
+      "King Manu & his wife Ida",
+      "King Bharata",
+      "King Aja"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408c0f9c515c23447160cb3"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "During coronation, Minaksi took oath on",
+    "correct_answer": "Manu Dharma Sastras",
+    "answers": [
+      "Vedas & Agamas",
+      "Manu Dharma Sastras",
+      "Bhagavatgeeta",
+      "Upanishads"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408be4ec515c23447160cae"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Why does Pandya Kingdom has 2 fishes as their emblem",
+    "correct_answer": "Vishnu took Matsyavatara twice. First to get the Vedas and Agamas and second to pull the boat of Manu",
+    "answers": [
+      "They believed evolution started from fish",
+      "Vishnu took Matsyavatara twice. First to get the Vedas and Agamas and second to pull the boat of Manu",
+      "Main economy of Pandya kingdom was by trading fish",
+      "None of the above"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408b679c515c23447160ca8"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "The word Hindu originated from",
+    "correct_answer": "Paramashiva himself. He defines \"Hindu\" as whole, those who defeats the evils.",
+    "answers": [
+      "The Persians who designated the land beyond the river Sindhu as Hindu and people living there as Hindus",
+      "The britishers who misspelt the river name Sindhu as Hindu and named all people who lived beyond this river as Hindu",
+      "Paramashiva himself. He defines \"Hindu\" as whole, those who defeats the evils.",
+      "People of India themself started calling as Hindus to get a identity"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408c503c515c23447160cbf"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which are the three origins of human beings",
+    "correct_answer": "Rama",
+    "answers": [
+      "Vamana",
+      "Matsyavatara",
+      "Varaha",
+      "Rama"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408c08bc515c23447160cb2"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Is Pandya dynasty older than Mesapatomian and Egyptian civilization?",
+    "correct_answer": "Yes",
+    "answers": [
+      "No",
+      "Yes"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408c199c515c23447160cb5"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Ikshvaku was son of ",
+    "correct_answer": "Vaivasvata Manu",
+    "answers": [
+      "Harishchandra",
+      "Vaivasvata Manu",
+      "Bharata",
+      "Bagiratha"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408c427c515c23447160cbc"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Who revealed Sankya sutras",
+    "correct_answer": "Kapila Muni",
+    "answers": [
+      "Sri Krishna",
+      "Kapila Muni",
+      "Atri",
+      "Kashyapa"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408bef3c515c23447160caf"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Who all held the title Manu",
+    "correct_answer": "King Satvavrata and Swayambhuva",
+    "answers": [
+      "King Satvavrata and Swayambhuva",
+      "Ikshvaku",
+      "Trisanku"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408c20dc515c23447160cb7"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Kingdom of Kashi was build by",
+    "correct_answer": "Swayambhava Manu",
+    "answers": [
+      "King Kshatraviddha",
+      "Lord Mahakal",
+      "Lord Paramashiva",
+      "King Janaka"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408c561c515c23447160cc0"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "During the Mahabharata war, which side did Malayadhvaja Pandya side with",
+    "correct_answer": "He took side of Pandavas",
+    "answers": [
+      "He was not involved in the Mahabharata war",
+      "He took side of Kauravas",
+      "He took side of Pandavas",
+      "He was involved in Mahabharata war, but did not side with anyone. He just offered help to the wounded irrespective"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408c3c0c515c23447160cbb"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Who is a founding father of Mahanirvani Akhada",
+    "correct_answer": "Kapila",
+    "answers": [
+      "Marichi",
+      "Kapila",
+      "Lord Ganesha",
+      "Agastya"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408c25fc515c23447160cb8"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Out of 5 jyotir lingas, the prithvi linga which Devi Parashakti herself created is in",
+    "correct_answer": "Ekambaranathar temple",
+    "answers": [
+      "Chidambara temple",
+      "Ekambaranathar temple",
+      "Kalahasti temple",
+      "Jambukeshwarar temple"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408c1ddc515c23447160cb6"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "First work on Ayurveda was started by",
+    "correct_answer": "Agnivesa",
+    "answers": [
+      "Dhanvantri",
+      "Kasyapa",
+      "Agnivesa",
+      "Charaka"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408bc98c515c23447160caa"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which are the three origins of human beings",
+    "correct_answer": "Surya Vamsa, Chandra Vamsa & Agni Vamsha",
+    "answers": [
+      "Surya Vamsa, Chandra Vamsa & Agni Vamsha",
+      "Surya Vamsa, Chandra Vamsa & Vayu Vamsha",
+      "Surya Vamsa, Chandra Vamsa & Varuna Vamsha",
+      "Surya Vamsa, Chandra Vamsa & Vaivasvata Vamsha"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408c46ec515c23447160cbd"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Brahma sutras was revealed by",
+    "correct_answer": "Badarayana Vyasa",
+    "answers": [
+      "Lord Brahma",
+      "Badarayana Vyasa",
+      "Vamana",
+      "Vishwamitra"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408bd62c515c23447160cac"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Was Kingdom of Bharata descendents of Manu dynasty",
+    "correct_answer": "Yes",
+    "answers": [
+      "No",
+      "Yes"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408c024c515c23447160cb1"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Who was the first person who created constitution based on Vedic Tradition",
+    "correct_answer": "Manu",
+    "answers": [
+      "Vishwamitra",
+      "Rama",
+      "Manu",
+      "Paramashiva himself"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408c146c515c23447160cb4"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Who created the world first democratic governance structure",
+    "correct_answer": "Manu",
+    "answers": [
+      "British",
+      "Basavanna",
+      "Manu",
+      "Rama"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6408c4b0c515c23447160cbe"
+    },
+    "category": "hindu_history",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "The earliest astronomical text - SuryaSiddhanta was authored by",
+    "correct_answer": "Mayasura",
+    "answers": [
+      "Varahamihira",
+      "Mayasura",
+      "Vashista",
+      "Aryabhatta"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "640eb225fba1e1f02349db4c"
+    },
+    "category": "hindu_history",
+    "type": "application",
+    "difficulty": "medium",
+    "question": "Description of application...",
+    "correct_answer": "",
+    "answers": [
+      "how to approch this?",
+      "what will be the first step?",
+      "what will be your cognition?"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "640eb30bfba1e1f02349db4d"
+    },
+    "category": "hindu_history",
+    "type": "application",
+    "difficulty": "medium",
+    "question": "Description of application...",
+    "correct_answer": "",
+    "answers": [
+      "how to approch this?",
+      "what will be the first step?",
+      "what will be your cognition?"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "640eb365fba1e1f02349db51"
+    },
+    "category": "hindu_history",
+    "type": "application",
+    "difficulty": "medium",
+    "question": "Description of application...",
+    "correct_answer": "",
+    "answers": [
+      "how to approch this?",
+      "what will be the first step?",
+      "what will be your cognition?"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "640eb370fba1e1f02349db52"
+    },
+    "category": "hindu_history",
+    "type": "application",
+    "difficulty": "medium",
+    "question": "Description of application...",
+    "correct_answer": "",
+    "answers": [
+      "how to approch this?",
+      "what will be the first step?",
+      "what will be your cognition?"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "640eb37cfba1e1f02349db53"
+    },
+    "category": "hindu_history",
+    "type": "application",
+    "difficulty": "medium",
+    "question": "Description of application...",
+    "correct_answer": "",
+    "answers": [
+      "how to approch this?",
+      "what will be the first step?",
+      "what will be your cognition?"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "640eb3b1fba1e1f02349db54"
+    },
+    "category": "hindu_history",
+    "type": "application",
+    "difficulty": "medium",
+    "question": "Description of application...",
+    "correct_answer": "",
+    "answers": [
+      "how to approch this?",
+      "what will be the first step?",
+      "what will be your cognition?"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "640eb431fba1e1f02349db55"
+    },
+    "category": "hindu_history",
+    "type": "activity",
+    "difficulty": "medium",
+    "question": "Description of activity...",
+    "correct_answer": "",
+    "answers": [
+      "Number of shares",
+      "Number of Comments",
+      "Like counts"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "640eb43bfba1e1f02349db56"
+    },
+    "category": "hindu_history",
+    "type": "activity",
+    "difficulty": "medium",
+    "question": "Description of activity...",
+    "correct_answer": "",
+    "answers": [
+      "Number of shares",
+      "Number of Comments",
+      "Like counts"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "640eb478fba1e1f02349db57"
+    },
+    "category": "hindu_history",
+    "type": "activity",
+    "difficulty": "medium",
+    "question": "Description of activity...",
+    "correct_answer": "",
+    "answers": [
+      "Number of shares",
+      "Number of Comments",
+      "Like counts"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "640eb491fba1e1f02349db58"
+    },
+    "category": "hindu_history",
+    "type": "activity",
+    "difficulty": "medium",
+    "question": "Description of activity...",
+    "correct_answer": "",
+    "answers": [
+      "Number of shares",
+      "Number of Comments",
+      "Like counts"
+    ]
+  }
+]
